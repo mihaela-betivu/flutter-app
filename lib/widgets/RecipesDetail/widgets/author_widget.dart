@@ -24,7 +24,7 @@ class AuthorWidget extends StatelessWidget {
       child: Row(
         children: [
           // Avatar
-          CircleAvatar(radius: 20, backgroundImage: AssetImage(avatarAsset)),
+          CircleAvatar(radius: 20, backgroundImage: NetworkImage(avatarAsset)),
           const SizedBox(width: 16),
 
           // Nume + locație
@@ -87,7 +87,7 @@ class AuthorWidget extends StatelessWidget {
               textStyle: const TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
-                fontFamily: 'Poppins'
+                fontFamily: 'Poppins',
               ),
             ),
             child: const Text('Follow'),

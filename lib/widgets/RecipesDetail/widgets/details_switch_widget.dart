@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-
-enum RecipeTab { ingredient, procedure }
+import 'package:flutter_application_1/models/tab.dart' as mtab;
 
 class DetailsSwitchWidget extends StatelessWidget {
-  final RecipeTab value;
-  final ValueChanged<RecipeTab> onChanged;
+  final List<mtab.Tab> tabs;
+  final int selectedIndex;
+  final ValueChanged<int> onChanged;
 
   final double height;
   final double radius;
@@ -14,22 +14,24 @@ class DetailsSwitchWidget extends StatelessWidget {
 
   const DetailsSwitchWidget({
     super.key,
-    required this.value,
+    required this.tabs,
+    required this.selectedIndex,
     required this.onChanged,
     this.height = 33,
     this.radius = 10,
-    this.activeColor = const Color(0xFF129575), // verde
-    this.inactiveTextColor = const Color(0xFF71B1A1), // verde-șters
+    this.activeColor = const Color(0xFF129575),
+    this.inactiveTextColor = const Color(0xFF71B1A1),
     this.activeTextColor = Colors.white,
   });
 
   @override
   Widget build(BuildContext context) {
-    Widget buildItem(String label, RecipeTab tab) {
-      final isActive = value == tab;
+    Widget buildItem(String label, int index) {
+      final isActive = selectedIndex == index;
+
       return Expanded(
         child: GestureDetector(
-          onTap: () => onChanged(tab),
+          onTap: () => onChanged(index),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             curve: Curves.easeOut,
@@ -53,12 +55,13 @@ class DetailsSwitchWidget extends StatelessWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
       child: Row(
         children: [
-          buildItem('Ingredient', RecipeTab.ingredient),
-          const SizedBox(width: 16),
-          buildItem('Procedure', RecipeTab.procedure),
+          for (int i = 0; i < tabs.length; i++) ...[
+            buildItem(tabs[i].name, i),
+            if (i != tabs.length - 1) const SizedBox(width: 16),
+          ],
         ],
       ),
     );

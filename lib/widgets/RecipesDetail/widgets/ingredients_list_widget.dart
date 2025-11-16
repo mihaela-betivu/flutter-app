@@ -11,11 +11,13 @@ class IngredientItem {
 class IngredientsList extends StatelessWidget {
   final List<IngredientItem> items;
   final String servesLabel;   // ex. "1 serve"
+  final int totalItems;
 
   const IngredientsList({
     super.key,
     required this.items,
-    this.servesLabel = '1 serve',
+    required this.servesLabel,
+    required this.totalItems,
   });
 
   @override
@@ -50,7 +52,7 @@ class IngredientsList extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '${items.length} Items',
+                '$totalItems Items',
                 style: const TextStyle(
                   color: Color(0xFFA9A9A9),
                   fontWeight: FontWeight.w400,
@@ -93,7 +95,7 @@ class IngredientsList extends StatelessWidget {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(6.0),
-                            child: Image.asset(it.assetIcon, fit: BoxFit.contain),
+                            child: Image.network(it.assetIcon, fit: BoxFit.contain),
                           ),
                         ),
                         const SizedBox(width: 16),

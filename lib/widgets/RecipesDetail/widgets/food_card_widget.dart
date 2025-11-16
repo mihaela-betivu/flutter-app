@@ -34,7 +34,7 @@ class FoodCard extends StatelessWidget {
               children: [
                 AspectRatio(
                   aspectRatio: 16 / 9,
-                  child: Image.asset(imageUrl, fit: BoxFit.cover),
+                  child: Image.network(imageUrl, fit: BoxFit.cover),
                 ),
                 // Gradient jos (transparent -> negru)
                 Positioned.fill(
@@ -55,7 +55,7 @@ class FoodCard extends StatelessWidget {
                 Positioned(
                   right: 10,
                   top: 10,
-                  child: RatingBadgeWidget(value: 4.5),
+                  child: RatingBadgeWidget(value: rating),
                 ),
                 // Timp + bookmark (jos)
                 Positioned(

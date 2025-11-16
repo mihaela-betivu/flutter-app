@@ -6,6 +6,7 @@ class CategoryTag extends StatelessWidget {
   final bool selected;
   const CategoryTag({required this.label, this.selected = false, super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return Container(

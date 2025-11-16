@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/RecipesHome/widgets/categories_widget.dart';
 import 'package:flutter_application_1/widgets/RecipesHome/widgets/header_widget.dart';
 import 'package:flutter_application_1/widgets/RecipesHome/widgets/new_recipes_list_widget.dart';
-import 'package:flutter_application_1/widgets/RecipesHome/widgets/recipe_card_widget.dart';
 import 'package:flutter_application_1/widgets/RecipesHome/widgets/recipes_list_widget.dart';
 import 'package:flutter_application_1/widgets/RecipesHome/widgets/search_widget.dart';
-import 'package:flutter_svg/svg.dart';
 
 class RecipesHomeScreenWidget extends StatelessWidget {
   const RecipesHomeScreenWidget({super.key});

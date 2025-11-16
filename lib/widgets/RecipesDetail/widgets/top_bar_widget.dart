@@ -7,7 +7,7 @@ class TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(14, 12, 18, 0),
+      padding: const EdgeInsets.fromLTRB(14, 12, 15, 0),
       child: Row(
         children: [
           IconButton(

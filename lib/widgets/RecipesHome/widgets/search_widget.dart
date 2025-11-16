@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:flutter_application_1/controllers/recipe_controller.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final RecipeController controller = Get.find<RecipeController>();
+
     return Padding(
       padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
       child: Row(
@@ -40,7 +44,7 @@ class SearchWidget extends StatelessWidget {
                       decoration: InputDecoration(
                         isDense: true,
 
-                        hintText: 'Search...',
+                        hintText: controller.searchPlaceholder.value,
                         hintStyle: TextStyle(
                           color: Color(0xFFD9D9D9),
                           fontSize: 11,
@@ -63,7 +67,7 @@ class SearchWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: const Color(
                 0xFF129575,
-              ), // fundalul galben-bej din exemplu
+              ), // fundalul verde din exemplu
               borderRadius: BorderRadius.circular(
                 10,
               ), // colțuri rotunjite

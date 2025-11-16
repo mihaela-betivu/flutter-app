@@ -27,14 +27,7 @@ class RecipeCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => const RecipesDetailPage(),
-          ),
-        );
-      },
+      onTap: onTap,
       child: SizedBox(
         width: 150,
         child: Stack(
@@ -108,24 +101,20 @@ class RecipeCardWidget extends StatelessWidget {
                   SizedBox(
                     height: 118,
                     width: 118,
-                    child: Image.asset(
-                      imagePath,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-
-                  // umbră separată, independentă de imagine
-                  Positioned.fill(
-                    child: DecoratedBox(
+                    child: Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.08),
-                            blurRadius: 25,
-                            offset: const Offset(0, 8),
+                            color: Colors.black26,
+                            blurRadius: 10,
+                            offset: Offset(0, 5),
                           ),
                         ],
+                      ),
+                      child: CircleAvatar(
+                        backgroundColor: Color(0xFFDDDDDD),
+                        backgroundImage: NetworkImage(imagePath),
                       ),
                     ),
                   ),

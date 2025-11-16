@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 class NewRecipeCardWidget extends StatelessWidget {
   final String title;
   final String author;
+  final String authorImage;
   final int minutes;
   final int rating; // 0..5
   final String imagePath;
@@ -12,6 +13,7 @@ class NewRecipeCardWidget extends StatelessWidget {
   const NewRecipeCardWidget({
     required this.title,
     required this.author,
+    required this.authorImage,
     required this.minutes,
     required this.rating,
     required this.imagePath,
@@ -47,7 +49,7 @@ class NewRecipeCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    title.length > 17 ? '${title.substring(0, 17)}…' : title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -61,7 +63,7 @@ class NewRecipeCardWidget extends StatelessWidget {
                   Row(
                     children: List.generate(
                       5,
-                          (i) => Icon(
+                      (i) => Icon(
                         Icons.star_rounded,
                         size: 18,
                         color: i < rating
@@ -75,9 +77,7 @@ class NewRecipeCardWidget extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 14,
-                        backgroundImage: AssetImage(
-                          'assets/images/review-image-1.jpg',
-                        ),
+                        backgroundImage: NetworkImage(authorImage),
                         backgroundColor: const Color(0xFFECEFF4),
                       ),
                       const SizedBox(width: 8),
@@ -120,20 +120,25 @@ class NewRecipeCardWidget extends StatelessWidget {
             Positioned(
               right: 10,
               bottom: 60,
-              child: Container(
-                width: 80,
+              child: SizedBox(
                 height: 80,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 14,
-                      offset: Offset(0, 6),
-                    ),
-                  ],
+                width: 80,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 10,
+                        offset: Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: CircleAvatar(
+                    backgroundColor: Color(0xFFDDDDDD),
+                    backgroundImage: NetworkImage(imagePath),
+                  ),
                 ),
-                child: Image.asset(imagePath, fit: BoxFit.cover),
               ),
             ),
           ],
