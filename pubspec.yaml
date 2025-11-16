@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.9
+  get: ^4.6.6
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -91,6 +92,27 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
   fonts:
+    - family: Lexend
+      fonts:
+        - asset: assets/fonts/Lexend-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Lexend-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Lexend-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Lexend-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Lexend-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Lexend-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Lexend-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Lexend-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Lexend-Black.ttf
+          weight: 900
+
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Thin.ttf
@@ -115,3 +137,4 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
+    - assets/data/
