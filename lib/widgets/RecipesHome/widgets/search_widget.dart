@@ -53,6 +53,9 @@ class SearchWidget extends StatelessWidget {
                         ),
                         border: InputBorder.none,
                       ),
+                      onChanged: (value) {
+                        controller.filterRecipes(value);
+                      },
                     ),
                   ),
                 ],

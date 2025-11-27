@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart' hide Tab;
+import 'dart:convert';
+
 import 'package:get/get.dart';
-import 'package:flutter_application_1/data/data.dart';
 import 'package:flutter_application_1/models/chef.dart';
 import 'package:flutter_application_1/models/recipe_detail.dart';
 import 'package:flutter_application_1/models/tab.dart' as mtab;
 import 'package:flutter_application_1/models/serving.dart';
 import 'package:flutter_application_1/models/ingredient.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class DetailsController extends GetxController {
 
@@ -28,14 +29,7 @@ class DetailsController extends GetxController {
     final arg = Get.arguments;
     print('arg primit în DetailsController: $arg');
 
-    // chiar dacă nu folosești încă id-ul, îl citești
-    if (arg is int) {
-      // aici, mai târziu, vei face fetch după id
-      // deocamdată doar încarci din `details` static
-      loadData();
-    } else {
-      loadData();
-    }
+    loadData();
   }
 
   // Încărcarea datelor
@@ -47,23 +41,26 @@ class DetailsController extends GetxController {
       // Simulăm un delay pentru loading
       await Future.delayed(Duration(seconds: 1));
 
-      // Exemplu: ia direct din `details` (data ta mock)
-      final map = details;
+      final String jsonString =
+      await rootBundle.loadString('assets/data/data.json');
 
-      recipe.value = RecipeDetail.fromJson(map['recipe']);
-      if (map['chef'] != null) {
-        chef.value = Chef.fromJson(map['chef']);
+      final jsonData = jsonDecode(jsonString);
+
+      recipe.value = RecipeDetail.fromJson(jsonData['recipe']);
+
+      if (jsonData['chef'] != null) {
+        chef.value = Chef.fromJson(jsonData['chef']);
       }
-      if (map['serving'] != null) {
-        serving.value = Serving.fromJson(map['serving']);
+      if (jsonData['serving'] != null) {
+        serving.value = Serving.fromJson(jsonData['serving']);
       }
 
       tabs.assignAll(
-        (map['tabs'] as List).map((e) => mtab.Tab.fromJson(e)),
+        (jsonData['tabs'] as List).map((e) => mtab.Tab.fromJson(e)),
       );
 
       ingredients.assignAll(
-        (map['ingredients'] as List).map((e) => Ingredient.fromJson(e)),
+        (jsonData['ingredients'] as List).map((e) => Ingredient.fromJson(e)),
       );
     } catch (e) {
       hasError.value = true;

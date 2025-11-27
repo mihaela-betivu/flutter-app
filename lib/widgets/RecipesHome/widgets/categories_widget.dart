@@ -10,7 +10,7 @@ class CategoriesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final RecipeController controller = Get.find<RecipeController>();
 
-    return Obx((){
+    return Obx(() {
       return Padding(
         padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
         child: SizedBox(
@@ -21,7 +21,11 @@ class CategoriesWidget extends StatelessWidget {
               SizedBox(width: 30),
 
               ...controller.categories.map((category) {
-                return CategoryTag(label: category.name, selected: category.selected);
+                return CategoryTag(
+                  label: category.name,
+                  selected: category.id == controller.selectedCategoryId.value,
+                  onTap: () => controller.selectCategory(category.id),
+                );
               }),
 
               SizedBox(width: 8),

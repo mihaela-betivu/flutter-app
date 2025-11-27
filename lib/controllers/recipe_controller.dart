@@ -1,5 +1,6 @@
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
-import 'package:flutter_application_1/data/data.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/models/category.dart';
 import 'package:flutter_application_1/models/recipe.dart';
@@ -27,32 +28,42 @@ class RecipeController extends GetxController {
     loadData();
   }
 
-  // Încărcarea datelor
+  // Încărcarea datelor din JSON
   Future<void> loadData() async {
     try {
       isLoading.value = true;
       hasError.value = false;
 
-      // Simulăm un delay pentru loading
-      await Future.delayed(Duration(seconds: 1));
+      // (opțional) mic delay ca să vezi animația de loading
+      await Future.delayed(const Duration(seconds: 1));
 
-      // Parsăm datele
-      user.value = User.fromJson(recipeData['user']);
-      searchPlaceholder.value = recipeData['filters']['search_placeholder'];
+      // 1. Citim fișierul JSON din assets
+      final jsonString = await rootBundle.loadString('assets/data/data.json');
 
-      categories.value = (recipeData['filters']['categories'] as List)
-          .map((item) => Category.fromJson(item))
-          .toList();
+      // 2. Parsăm în Map
+      final Map<String, dynamic> data =
+      jsonDecode(jsonString) as Map<String, dynamic>;
 
-      recipes.value = (recipeData['recipes'] as List)
+      // 3. Mapăm pe modele
+      user.value = User.fromJson(data['user']);
+
+      searchPlaceholder.value =
+      data['filters']['search_placeholder'] as String;
+
+      categories.value =
+          (data['filters']['categories'] as List<dynamic>)
+              .map((item) => Category.fromJson(item))
+              .toList();
+
+      recipes.value = (data['recipes'] as List<dynamic>)
           .map((item) => Recipe.fromJson(item))
           .toList();
 
-      newRecipes.value = (recipeData['new_recipes'] as List)
+      newRecipes.value = (data['new_recipes'] as List<dynamic>)
           .map((item) => NewRecipe.fromJson(item))
           .toList();
 
-      filteredRecipes.value = recipes;
+      filteredRecipes.value = List<Recipe>.from(recipes);
 
     } catch (e) {
       hasError.value = true;
@@ -63,56 +74,43 @@ class RecipeController extends GetxController {
     }
   }
 
-  // Selectare categorie
-  void selectCategory(int categoryId) {
-    selectedCategoryId.value = categoryId;
+  void _applyFilters() {
+    // pornim de la toate rețetele
+    List<Recipe> list = recipes.toList();
 
-    // Update selected state
-    categories.value = categories.map((cat) {
-      return Category(
-        id: cat.id,
-        name: cat.name,
-        selected: cat.id == categoryId,
-      );
-    }).toList();
-
-    filterRecipes();
-  }
-
-  // Căutare rețete
-  void searchRecipes(String query) {
-    searchQuery.value = query;
-    filterRecipes();
-  }
-
-  // Filtrare rețete
-  void filterRecipes() {
-    var filtered = recipes.toList();
-
-    // Filtrare după căutare
-    if (searchQuery.value.isNotEmpty) {
-      filtered = filtered
-          .where((recipe) => recipe.name
-          .toLowerCase()
-          .contains(searchQuery.value.toLowerCase()))
+    // 1) filtrare după categorie
+    if (selectedCategoryId.value != 1) {
+      list = list
+          .where((r) => r.categoryId == selectedCategoryId.value)
           .toList();
     }
 
-    // Aici poți adăuga logica pentru filtrare după categorie
-    // if (selectedCategoryId.value != 1) { ... }
-
-    filteredRecipes.value = filtered;
-  }
-
-  // Toggle bookmark
-  void toggleBookmark(int recipeId) {
-    final index = recipes.indexWhere((r) => r.id == recipeId);
-    if (index != -1) {
-      recipes[index].isBookmarked = !recipes[index].isBookmarked;
-      recipes.refresh();
-      filterRecipes();
+    // 2) filtrare după nume (căutare)
+    if (searchQuery.value.isNotEmpty) {
+      final q = searchQuery.value.toLowerCase();
+      list = list
+          .where((r) => r.name.toLowerCase().contains(q))
+          .toList();
     }
+
+    // actualizăm lista afișată în UI
+    filteredRecipes.assignAll(list);
   }
+
+
+  void filterRecipes(String query) {
+    searchQuery.value = query;
+    _applyFilters();
+  }
+
+  void selectCategory(int categoryId) {
+    selectedCategoryId.value = categoryId; // setăm categoria selectată
+
+    categories.refresh(); // actualizăm UI-ul
+
+    _applyFilters(); // aplicăm filtrarea
+  }
+
 
   // Refresh
   Future<void> refreshData() async {

@@ -1,17 +1,18 @@
-Map<String, dynamic> recipeData = {
+{
   "user": {
-    "name": "Jega",
+    "name": "Jegas",
     "profile_image": "https://randomuser.me/api/portraits/men/45.jpg",
     "greeting": "What are you cooking today?"
   },
   "filters": {
     "search_placeholder": "Search recipe",
     "categories": [
-      { "id": 1, "name": "All", "selected": true },
-      { "id": 2, "name": "Indian", "selected": false },
-      { "id": 3, "name": "Italian", "selected": false },
-      { "id": 4, "name": "Asian", "selected": false },
-      { "id": 5, "name": "Chinese", "selected": false }
+      { "id": 1, "name": "All" },
+      { "id": 2, "name": "Indian" },
+      { "id": 3, "name": "Italian" },
+      { "id": 4, "name": "Asian" },
+      { "id": 5, "name": "Chinese" },
+      { "id": 6, "name": "Moldavian" }
     ]
   },
   "recipes": [
@@ -20,8 +21,9 @@ Map<String, dynamic> recipeData = {
       "name": "Classic Greek Salad",
       "rating": 4.5,
       "time": "15 Mins",
-      "is_bookmarked": true,
-      "image": "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg"
+      "is_bookmarked": false,
+      "image": "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg",
+      "categoryId": 3
     },
     {
       "id": 102,
@@ -29,23 +31,8 @@ Map<String, dynamic> recipeData = {
       "rating": 3.5,
       "time": "10 Mins",
       "is_bookmarked": false,
-      "image": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg"
-    },
-    {
-      "id": 103,
-      "name": "Crunchy Nut Coleslaw",
-      "rating": 3.5,
-      "time": "10 Mins",
-      "is_bookmarked": false,
-      "image": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg"
-    },
-    {
-      "id": 104,
-      "name": "Crunchy Nut Coleslaw",
-      "rating": 3.5,
-      "time": "10 Mins",
-      "is_bookmarked": false,
-      "image": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg"
+      "image": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg",
+      "categoryId": 4
     }
   ],
   "new_recipes": [
@@ -67,10 +54,7 @@ Map<String, dynamic> recipeData = {
       "image": "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg",
       "author_image": "https://randomuser.me/api/portraits/women/12.jpg"
     }
-  ]
-};
-
-Map<String, dynamic> details = {
+  ],
   "recipe": {
     "id": 501,
     "title": "Spicy chicken burger with French fries",
@@ -133,4 +117,3 @@ Map<String, dynamic> details = {
     }
   ]
 }
-;
